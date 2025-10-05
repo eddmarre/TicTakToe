@@ -412,90 +412,90 @@ Want to See inside the project? Take a quick look at the scripts I wrote that al
 
       public class Selector : MonoBehaviour
       {
-      private Collider _hitCollider;
-      private GameManager _gameManager;
-
-        private void Start()
-        {
-            _gameManager = GameManager.Instance;
-            _gameManager.PlayerGameInput.OnPlayerClick += CastRayFromMousePosition;
-        }
-
-        private void CastRayFromMousePosition()
-        {
-            if (!_gameManager.IsGameActive) return;
-            if (Camera.main == null) return;
-
-            Ray cameraRay = Camera.main.ScreenPointToRay(Mouse.current.position.value);
-            Physics.Raycast(cameraRay, out RaycastHit hit, float.MaxValue);
-
-            if (hit.collider == null) return;
-            if (hit.collider.TryGetComponent(out NeutralTile tile))
-            {
-                tile.OnSelect();
-            }
-        }
+          private Collider _hitCollider;
+          private GameManager _gameManager;
+    
+          private void Start()
+          {
+              _gameManager = GameManager.Instance;
+              _gameManager.PlayerGameInput.OnPlayerClick += CastRayFromMousePosition;
+          }
+    
+          private void CastRayFromMousePosition()
+          {
+              if (!_gameManager.IsGameActive) return;
+              if (Camera.main == null) return;
+    
+              Ray cameraRay = Camera.main.ScreenPointToRay(Mouse.current.position.value);
+              Physics.Raycast(cameraRay, out RaycastHit hit, float.MaxValue);
+    
+              if (hit.collider == null) return;
+              if (hit.collider.TryGetComponent(out NeutralTile tile))
+              {
+                  tile.OnSelect();
+              }
+          }
       }
 - [ ] ITile.cs
 
       public interface ITile
       {
-      public void OnSelect();
-      public void SetCoordinates(int x, int y);
-      public Tuple<int, int> GetCoordinates();
+          public void OnSelect();
+          public void SetCoordinates(int x, int y);
+          public Tuple<int, int> GetCoordinates();
       }
 - [ ] NeutralTile.cs
 
       public class NeutralTile : MonoBehaviour, ITile
       {
-      private Tuple<int, int> _coords;
+          private Tuple<int, int> _coords;
 
-        public void OnSelect() => GameManager.Instance.EndTurn(this);
+          public void OnSelect() => GameManager.Instance.EndTurn(this);
 
-        public void SetCoordinates(int x, int y) => _coords = new Tuple<int, int>(x, y);
+          public void SetCoordinates(int x, int y) => _coords = new Tuple<int, int>(x, y);
 
-        public Tuple<int, int> GetCoordinates() => _coords;
+          public Tuple<int, int> GetCoordinates() => _coords;
       }
 - [ ] XTile.cs and OTile.cs
 
       public class OTile : MonoBehaviour, ITile
       {
-      private Tuple<int, int> _coords;
+          private Tuple<int, int> _coords;
 
-        public void OnSelect()
-        {
-        }
+          public void OnSelect()
+          {
+          }
     
-        public void SetCoordinates(int x, int y) => _coords = new Tuple<int, int>(x, y);
+          public void SetCoordinates(int x, int y) => _coords = new Tuple<int, int>(x, y);
     
-        public Tuple<int, int> GetCoordinates() => _coords;
+          public Tuple<int, int> GetCoordinates() => _coords;
       }
 - [ ] MessageManager.cs
 
       public class MessageManager : MonoBehaviour
       {
-      private TextMeshProUGUI _textMeshPro;
+          private TextMeshProUGUI _textMeshPro;
 
-        private void Awake() => _textMeshPro = GetComponent<TextMeshProUGUI>();
+          private void Awake() => _textMeshPro = GetComponent<TextMeshProUGUI>();
     
-        private void Start() => GameManager.Instance.OnUpdateGameText += OnUpdateMessage;
+          private void Start() => GameManager.Instance.OnUpdateGameText += OnUpdateMessage;
     
-        private void OnUpdateMessage(string newMessage) => _textMeshPro.text = newMessage;
+          private void OnUpdateMessage(string newMessage) => _textMeshPro.text = newMessage;
       }
 - [ ] PlayerInput.cs
 
       public class PlayerInput
       {
-      private InputSystem_Actions _inputSystemActions;
+          private InputSystem_Actions _inputSystemActions;
 
-        public event Action OnPlayerClick;
-        public event Action OnPlayerRestart;
-
-        public PlayerInput()
-        {
-            _inputSystemActions = new InputSystem_Actions();
-            _inputSystemActions.Player.Enable();
-            _inputSystemActions.Player.Click.performed += (context) => OnPlayerClick?.Invoke();
-            _inputSystemActions.Player.Restart.performed += (context) => OnPlayerRestart?.Invoke();
-        }
+          public event Action OnPlayerClick;
+          public event Action OnPlayerRestart;
+    
+          public PlayerInput()
+          {
+              _inputSystemActions = new InputSystem_Actions();
+              _inputSystemActions.Player.Enable();
+              _inputSystemActions.Player.Click.performed += (context) => OnPlayerClick?.Invoke();
+              _inputSystemActions.Player.Restart.performed += (context) => OnPlayerRestart?.Invoke();
+          }
       }
