@@ -37,7 +37,6 @@ public class Board : MonoBehaviour
                 {
                     mesh.enabled = false;
                 }
-
                 _createdGameObjects.Add(spawnedQuad);
                 _boardTileGameObjects[x, y] = spawnedQuad;
             }
