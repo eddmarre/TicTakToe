@@ -1,2 +1,1 @@
-Play on web here: 
-https://kpone.itch.io/tictaktoe
+![[Click Here To Play](https://kpone.itch.io/tictaktoe)](https://i.imgur.com/vuIbypq.png)
