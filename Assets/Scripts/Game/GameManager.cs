@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     private bool _isPlayer1Turn = true;
     private int _turnCount;
-    
+
     private readonly float _secondsToWait = 2f;
 
     public bool IsGameActive;
@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
             OnUpdateGameText?.Invoke($"{player} won game!");
             IsGameActive = false;
             StartCoroutine(WaitBeforeGameResets());
+            return;
         }
 
         if (_turnCount >= 8)
